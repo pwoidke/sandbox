@@ -1,16 +1,104 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>SnagApple Sandbox</title>
-	<link rel="stylesheet" type="text/css" href="dist/main.min.css">
-</head>
-<body>
-
-
-
-  <!-- code away -->
-
-
-	<script type="text/javascript" src="dist/main.min.js"></script>
-</body>
+	<head>
+		<title>SnagApple Sandbox</title>
+		<link rel="stylesheet" type="text/css" href="dist/main.min.css">
+		<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	</head>
+	<body ng-app="myapp">
+		<div ng-controller="PropertiesCtrl" data-ng-init="loadProperties()">
+			<form>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon"><i class="fa fa-search"></i></div>
+						<input type="text" class="form-control" placeholder="Search properties" ng-model="searchProperties">
+					</div>
+				</div>
+			</form>
+			<table id="properties-table" class="table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>
+							<a href="#" ng-click="sortType = 'mlsnumber'; sortReverse = !sortReverse">
+							MLS Number
+							<span ng-show="sortType == 'mlsnumber' && !sortReverse" class="fa fa-caret-down"></span>
+							<span ng-show="sortType == 'mlsnumber' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="#" ng-click="sortType = 'streetNumber'; sortReverse = !sortReverse">
+							Street Address
+							<span ng-show="sortType == 'streetNumber' && !sortReverse" class="fa fa-caret-down"></span>
+							<span ng-show="sortType == 'streetNumber' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="#" ng-click="sortType = 'city'; sortReverse = !sortReverse">
+							City
+							<span ng-show="sortType == 'city' && !sortReverse" class="fa fa-caret-down"></span>
+							<span ng-show="sortType == 'city' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="#" ng-click="sortType = 'stateOrProvince'; sortReverse = !sortReverse">
+							State/Province
+							<span ng-show="sortType == 'stateOrProvince' && !sortReverse" class="fa fa-caret-down"></span>
+							<span ng-show="sortType == 'stateOrProvince' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="#" ng-click="sortType = 'postalCode'; sortReverse = !sortReverse">
+							Postal Code
+							<span ng-show="sortType == 'postalCode' && !sortReverse" class="fa fa-caret-down"></span>
+							<span ng-show="sortType == 'postalCode' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="#" ng-click="sortType = 'sqftTotal'; sortReverse = !sortReverse">
+							Sq. Ft.
+							<span ng-show="sortType == 'sqftTotal' && !sortReverse" class="fa fa-caret-down"></span>
+							<span ng-show="sortType == 'sqftTotal' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="#" ng-click="sortType = 'currentPrice'; sortReverse = !sortReverse">
+							Price
+							<span ng-show="sortType == 'currentPrice' && !sortReverse" class="fa fa-caret-down"></span>
+							<span ng-show="sortType == 'currentPrice' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="#" ng-click="sortType = 'bedsTotal'; sortReverse = !sortReverse">
+							Beds
+							<span ng-show="sortType == 'bedsTotal' && !sortReverse" class="fa fa-caret-down"></span>
+							<span ng-show="sortType == 'bedsTotal' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="#" ng-click="sortType = 'bathsTotal'; sortReverse = !sortReverse">
+							Baths
+							<span ng-show="sortType == 'bathsTotal' && !sortReverse" class="fa fa-caret-down"></span>
+							<span ng-show="sortType == 'bathsTotal' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="property in properties.properties | orderBy:sortType:sortReverse | filter:searchProperties">
+						<td>{{property.mlsnumber}}</td>
+						<td><a class="property-address" href="https://www.google.com/maps/preview/@{{property.latitude}},{{property.longitude}},16z" target="_blank">{{property.streetNumber}} {{property.streetNumberModifier}} {{property.streetDirPrefix}} {{property.streetName}} {{property.streetDirSuffix}} {{property.streetSuffix}}</a></td>
+						<td>{{property.city}}</td>
+						<td>{{property.stateOrProvince}}</td>
+						<td>{{property.postalCode}} {{property.postalCodePlus4}}</td>
+						<td>{{property.sqftTotal}}</td>
+						<td>${{property.currentPrice}}</td>
+						<td>{{property.bedsTotal}}</td>
+						<td>{{property.bathsTotal}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div ng-show="loading" class="loader">Loading...</div>
+		</div>
+		<script type="text/javascript" src="dist/main.min.js"></script>
+	</body>
 </html>

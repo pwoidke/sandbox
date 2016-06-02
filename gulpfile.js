@@ -90,7 +90,7 @@ var jsTasks = lazypipe()
   .pipe(gulp.dest, manifest.paths.dist)
   .pipe(expect,'dist/main.js')
   .pipe(rename, { suffix: '.min' })
-  .pipe(uglify)
+  // .pipe(uglify)
   .pipe(header, banner.min, { package : package })
   .pipe(gulp.dest, manifest.paths.dist)
   .pipe(expect,'dist/main.min.js');
